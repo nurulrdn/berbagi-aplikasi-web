@@ -1,0 +1,90 @@
+---
+// Halaman Safelink Monetisasi - Berbagi Aplikasi
+---
+
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menyiapkan Tautan Unduhan - Berbagi Aplikasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; text-align: center; color: #334155;}
+        
+        .header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); width: 100%; padding: 20px 0; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 800; }
+
+        .container { max-width: 800px; width: 90%; margin: 40px auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.05); border: 1px solid #f1f5f9; }
+        
+        .title { font-size: 22px; color: #0f172a; font-weight: 800; margin-bottom: 10px; }
+        .desc { color: #64748b; font-size: 16px; margin-bottom: 30px; }
+
+        /* KOTAK IKLAN (Sangat Penting untuk Monetisasi) */
+        .ad-banner { background: #f1f5f9; border: 2px dashed #cbd5e1; width: 100%; max-width: 728px; height: 90px; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; border-radius: 12px; }
+        .ad-box { background: #f1f5f9; border: 2px dashed #cbd5e1; width: 300px; height: 250px; margin: 20px auto; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; border-radius: 12px; }
+
+        .timer { font-size: 64px; font-weight: 800; color: #2563eb; margin: 20px 0; text-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        
+        .btn-disabled { background: #cbd5e1; color: white; padding: 16px 40px; border-radius: 12px; font-size: 18px; font-weight: 700; display: inline-block; cursor: not-allowed; }
+        
+        .btn-target { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px 40px; border-radius: 12px; text-decoration: none; font-size: 18px; font-weight: 800; display: none; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); transition: transform 0.3s; }
+        .btn-target:hover { transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Berbagi Aplikasi - Safelink</h1>
+    </div>
+
+    <div class="ad-banner" style="margin-top: 30px;">Iklan Adsterra Atas (728x90)</div>
+
+    <div class="container">
+        <div class="title">Harap Tunggu Sebentar...</div>
+        <div class="desc">Kami sedang memindai file dari virus dan menyiapkan tautan unduhan aman Anda.</div>
+
+        <div class="ad-box">Iklan Adsterra Tengah (300x250)</div>
+
+        <div id="timerDisplay" class="timer">10</div>
+
+        <div id="btnDisabled" class="btn-disabled">Menyiapkan Link...</div>
+        <button id="btnTarget" class="btn-target">Get Link 🚀</button>
+    </div>
+
+    <div class="ad-banner">Iklan Adsterra Bawah (728x90)</div>
+
+    <script>
+        // MENGAMBIL LINK ASLI DARI URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUrl = urlParams.get('url') || '/'; 
+
+        // LOGIKA TIMER 10 DETIK
+        let timeLeft = 10;
+        
+        // Menambahkan 'as HTMLElement' agar TypeScript yakin elemen ini ada
+        const timerDisplay = document.getElementById('timerDisplay') as HTMLElement;
+        const btnDisabled = document.getElementById('btnDisabled') as HTMLElement;
+        const btnTarget = document.getElementById('btnTarget') as HTMLElement;
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            
+            // Menambahkan .toString() agar angka menjadi teks
+            timerDisplay.innerText = timeLeft.toString();
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerDisplay.innerText = "0";
+                
+                btnDisabled.style.display = 'none';
+                btnTarget.style.display = 'inline-block';
+
+                btnTarget.onclick = () => {
+                    window.location.href = targetUrl;
+                };
+            }
+        }, 1000); 
+    </script>
+
+</body>
+</html>
