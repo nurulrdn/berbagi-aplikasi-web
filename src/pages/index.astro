@@ -78,16 +78,10 @@ const semuaKategori = [...new Set(daftarAplikasi.map((app: CollectionEntry<'apli
 
     <div class="main-layout">
         <div class="sidebar">
-            <div class="menu-title">Sistem Operasi</div>
-            <ul class="menu-list">
-                <li><a href="#">Windows</a></li>
-                <li><a href="#">macOS</a></li>
-                <li><a href="#">Linux</a></li>
-            </ul>
-            <div class="menu-title" style="margin-top: 25px;">Kategori Utama</div>
+            <div class="menu-title">Kategori Utama</div>
             <ul class="menu-list">
                 {semuaKategori.map((kategori) => (
-                    <li><a href="#">{kategori}</a></li>
+                    <li><a href={'/kategori/' + (kategori as string).toLowerCase().replace(/\s+/g, '-')}>{kategori}</a></li>
                 ))}
             </ul>
         </div>
