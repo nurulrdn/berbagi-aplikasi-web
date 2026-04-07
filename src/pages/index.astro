@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content'; 
 
-const daftarAplikasi = await getCollection('aplikasi');
+// Reverse agar aplikasi terbaru muncul paling atas
+const daftarAplikasi = (await getCollection('aplikasi')).reverse();
 const semuaKategori = [...new Set(daftarAplikasi.map((app: CollectionEntry<'aplikasi'>) => app.data.kategori))];
 ---
 

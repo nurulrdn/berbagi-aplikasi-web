@@ -63,7 +63,7 @@ const { Content } = await render(app);
 <body>
     <div class="navbar">
         <a href="/" class="brand">
-            <img src="/favicon.png" alt="Logo" class="brand-logo" onerror="this.src='https://placehold.co/40x40/2563eb/white?text=BA'">
+            <img src="/logo.png" alt="Logo" class="brand-logo" onerror="this.src='https://placehold.co/40x40/2563eb/white?text=BA'">
             <h1 class="brand-text">Berbagi Aplikasi</h1>
         </a>
         <div class="nav-menu">
@@ -126,7 +126,7 @@ const { Content } = await render(app);
 
             <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 40px;">
                 {app.data.daftar_download && app.data.daftar_download.map((item: any) => (
-                    <a href={'/safelink?url=' + item.link} class="btn-download">⬇️ {item.nama}</a>
+                    <a href={'/safelink?url=' + item.link} class="btn-download">{item.nama}</a>
                 ))}
             </div>
         </article>
