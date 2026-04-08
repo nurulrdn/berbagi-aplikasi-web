@@ -5,7 +5,7 @@ import { getCollection, render } from 'astro:content';
 export async function getStaticPaths() {
     const semuaAplikasi = await getCollection('aplikasi');
     return semuaAplikasi.map(app => ({
-        params: { id: app.id },
+        params: { slug: app.id },
         props: { app },
     }));
 }
