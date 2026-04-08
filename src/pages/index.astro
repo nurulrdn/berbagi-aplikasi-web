@@ -20,15 +20,20 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; color: #334155; }
-        .navbar { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2); }
+        
+        /* NAVBAR UTAMA */
+        .navbar { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2); flex-wrap: wrap; }
         .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .brand-logo { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; background-color: white; padding: 2px;}
         .brand-text { margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; }
+        
+        /* TOMBOL MENU HP (Disembunyikan di PC) */
+        .mobile-menu-btn { display: none; background: transparent; border: none; color: white; font-size: 26px; cursor: pointer; padding: 0; }
+        
         .nav-menu { display: flex; gap: 15px; align-items: center; }
-        .nav-link { text-decoration: none; color: #cbd5e1; font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 12px; transition: all 0.3s; }
-        .nav-link:hover { background-color: rgba(255,255,255,0.15); color: #ffffff; }
-        .nav-btn-special { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; }
+        .nav-btn-special { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; }
         .search-bar { padding: 12px 20px; width: 260px; border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; outline: none; background-color: rgba(255,255,255,0.05); color: white; }
+        
         .main-layout { display: flex; max-width: 1100px; margin: 30px auto; padding: 0 20px; gap: 40px; }
         .sidebar { width: 220px; flex-shrink: 0; }
         .menu-title { font-size: 12px; color: #64748b; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; }
@@ -56,11 +61,18 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .ad-banner { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: center; margin-bottom: 25px; }
         .ad-label { font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin: 0 0 10px 0; }
 
-        /* SUNTIKAN CSS MOBILE RESPONSIVE */
+        /* 📱 SUNTIKAN CSS KHUSUS HP (MOBILE RESPONSIVE) */
         @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 15px; padding: 15px 20px; text-align: center; }
-            .nav-menu { flex-direction: column; width: 100%; gap: 10px; }
+            .navbar { padding: 15px 20px; }
+            .mobile-menu-btn { display: block; } /* Munculkan tombol hamburger */
+            
+            /* Sembunyikan menu secara default, buat memanjang ke bawah saat aktif */
+            .nav-menu { display: none; width: 100%; flex-direction: column; margin-top: 15px; gap: 15px; }
+            .nav-menu.active { display: flex; } /* Class aktif yang di-trigger JS */
+            
+            .nav-btn-special { width: 100%; box-sizing: border-box; }
             .search-bar { width: 100%; box-sizing: border-box; }
+            
             .main-layout { flex-direction: column; padding: 0 15px; gap: 20px; }
             .sidebar { width: 100%; }
             .menu-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
@@ -78,7 +90,10 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
             <img src="/logo.png" alt="Logo" class="brand-logo" onerror="this.src='https://placehold.co/40x40/2563eb/white?text=BA'">
             <h1 class="brand-text">Berbagi Aplikasi</h1>
         </a>
-        <div class="nav-menu">
+        
+        <button class="mobile-menu-btn" id="mobileBtn">☰</button>
+
+        <div class="nav-menu" id="navMenu">
             <a href="/request" class="nav-btn-special">📝 Request Software</a>
             <input type="text" id="searchInput" class="search-bar" placeholder="Cari software...">
         </div>
@@ -113,7 +128,6 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
             <div class="ad-banner">
                 <p class="ad-label">ADVERTISING</p>
                 </div>
-
             
             <div id="appList">
                 {displayedApps.map((app: any) => (
@@ -151,6 +165,22 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // SCRIPT TOMBOL MENU HP (HAMBURGER)
+            const mobileBtn = document.getElementById('mobileBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (mobileBtn && navMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    // Ubah ikon saat ditekan
+                    if (navMenu.classList.contains('active')) {
+                        mobileBtn.innerText = '✖'; // Tombol close (silang)
+                    } else {
+                        mobileBtn.innerText = '☰'; // Tombol menu garis tiga
+                    }
+                });
+            }
+
             // Script Pencarian Realtime
             const searchInput = document.getElementById('searchInput') as HTMLInputElement;
             const appItems = document.querySelectorAll('.app-item') as NodeListOf<HTMLElement>;
