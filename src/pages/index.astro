@@ -2,135 +2,151 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-// 1. Ambil data dari koleksi "aplikasi" (Bukan "apps")
+// Mengambil data dari koleksi "aplikasi" dan membalik urutannya (terbaru di atas)
 const allApps = await getCollection('aplikasi');
-
-// Kita balik urutannya agar aplikasi yang terakhir kali kamu input muncul paling atas
 const sortedApps = allApps.reverse();
-
-// 2. Persiapan Logika Paginasi (10 Aplikasi per halaman)
-const appsPerPage = 10;
-const totalPages = Math.ceil(sortedApps.length / appsPerPage);
 ---
 
 <Layout title="Berbagi Aplikasi - Download Software Gratis Terlengkap">
-	<main>
-		<nav class="navbar">
-			<div class="nav-container">
-				<a href="/" class="logo">🚀 Berbagi Aplikasi</a>
-				<div class="nav-menu">
-					<a href="/request" class="nav-btn-special">📝 Request Software</a>
-				</div>
-			</div>
-			<div class="search-container">
-				<input type="text" id="searchInput" class="search-bar" placeholder="Cari software idamanmu...">
-			</div>
-		</nav>
+	<main class="container">
+		<header class="header">
+			<a href="/" class="logo">🚀 Berbagi Aplikasi</a>
+			<input type="text" id="searchInput" class="search-bar" placeholder="Cari software idamanmu...">
+		</header>
 
-		<div class="content-wrapper">
-			<aside class="sidebar">
-				<div class="sidebar-box">
-					<h3>📂 Kategori</h3>
-					<ul>
-						<li><a href="/kategori/browser">🌐 Browser</a></li>
-						<li><a href="/kategori/office">📄 Office</a></li>
-						<li><a href="/kategori/multimedia">🎬 Multimedia</a></li>
-						<li><a href="/kategori/utility">🛠️ Utility</a></li>
-					</ul>
+		<div class="ad-banner">
+			<p class="ad-label">ADVERTISING</p>
+			<div id="ad-native-top">
 				</div>
-				
-				<div class="sidebar-box">
-					<h3>💻 Sistem Operasi</h3>
-					<ul>
-						<li><a href="/os/windows">🪟 Windows</a></li>
-						<li><a href="/os/macos">🍎 macOS</a></li>
-						<li><a href="/os/linux">🐧 Linux</a></li>
-					</ul>
-				</div>
-
-				<div class="ad-sidebar">
-					<p class="ad-label">ADVERTISING</p>
-					<div id="ad-native-sidebar">
-						</div>
-				</div>
-			</aside>
-
-			<section class="main-content">
-				<div class="app-grid" id="appGrid">
-					{sortedApps.map(app => (
-						<a href={`/${app.id}`} class="app-card" data-title={app.data.title.toLowerCase()}>
-							<img src={app.data.gambar} alt={app.data.title} class="app-icon" />
-							<div class="app-info">
-								<h2 class="app-title">{app.data.title}</h2>
-								<span class="app-category">{app.data.kategori}</span>
-								<div class="app-meta">
-									<span class="os-tag">{app.data.os}</span>
-									<span class="version-tag">{app.data.ukuran}</span>
-								</div>
-							</div>
-						</a>
-					))}
-				</div>
-			</section>
 		</div>
 
-		<div class="sticky-ad">
-			<div id="ad-sticky-bottom">
-				</div>
+		<div class="app-grid" id="appGrid">
+			{sortedApps.map(app => (
+				<a href={`/${app.id}`} class="app-card" data-title={app.data.title.toLowerCase()}>
+					<img src={app.data.gambar} alt={app.data.title} class="app-icon" />
+					<div class="app-info">
+						<h2 class="app-title">{app.data.title}</h2>
+						<p class="app-meta">{app.data.kategori} • {app.data.os}</p>
+					</div>
+				</a>
+			))}
 		</div>
 	</main>
 </Layout>
 
 <style>
-	.content-wrapper {
-		display: flex;
-		gap: 20px;
-		max-width: 1200px;
-		margin: 20px auto;
-		padding: 0 15px;
+	/* CSS KEMBALI BERSIH, SIMPEL, DAN LUAS */
+	.container { 
+		max-width: 1000px; 
+		margin: 0 auto; 
+		padding: 30px 20px; 
 	}
 
-	.navbar { background: #1a1a2e; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid #0f3460; }
-	.nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-	.logo { color: #e94560; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+	.header { 
+		display: flex; 
+		justify-content: space-between; 
+		align-items: center; 
+		margin-bottom: 40px; 
+		flex-wrap: wrap; 
+		gap: 20px; 
+		border-bottom: 2px solid #1a1a2e;
+		padding-bottom: 20px;
+	}
 	
-	.search-container { max-width: 800px; margin: 15px auto 0; }
-	.search-bar { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #16213e; color: white; font-size: 1rem; }
+	.logo { 
+		color: #e94560; 
+		font-size: 1.8rem; 
+		font-weight: bold; 
+		text-decoration: none; 
+	}
 
-	.sidebar { width: 280px; flex-shrink: 0; }
-	.sidebar-box { background: #16213e; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #e94560; }
-	.sidebar-box h3 { margin-top: 0; color: #e94560; font-size: 1.1rem; }
-	.sidebar-box ul { list-style: none; padding: 0; }
-	.sidebar-box li a { color: #8ea1c3; text-decoration: none; display: block; padding: 8px 0; transition: 0.3s; }
-	.sidebar-box li a:hover { color: #e94560; padding-left: 5px; }
-
-	.main-content { flex-grow: 1; }
-	.app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+	.search-bar { 
+		padding: 12px 20px; 
+		border-radius: 10px; 
+		border: 1px solid #1a1a2e; 
+		width: 100%; 
+		max-width: 350px; 
+		background: #16213e; 
+		color: white; 
+		font-size: 1rem;
+		transition: 0.3s;
+	}
+	.search-bar:focus {
+		outline: none;
+		border-color: #e94560;
+		box-shadow: 0 0 10px rgba(233, 69, 96, 0.3);
+	}
 	
-	.app-card { background: #16213e; border-radius: 15px; padding: 20px; text-decoration: none; transition: 0.3s; border: 1px solid #1a1a2e; display: block; }
-	.app-card:hover { transform: translateY(-5px); border-color: #e94560; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+	/* LAYOUT GRID UTAMA */
+	.app-grid { 
+		display: grid; 
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+		gap: 25px; 
+	}
 	
-	.app-icon { width: 80px; height: 80px; border-radius: 18px; margin-bottom: 15px; object-fit: cover; }
-	.app-title { color: #fff; margin: 0; font-size: 1.2rem; }
-	.app-category { color: #e94560; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+	.app-card { 
+		background: #16213e; 
+		padding: 25px 20px; 
+		border-radius: 15px; 
+		text-align: center; 
+		text-decoration: none; 
+		transition: 0.3s; 
+		border: 1px solid transparent;
+	}
+	.app-card:hover { 
+		transform: translateY(-8px); 
+		border-color: #e94560;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+	}
+	
+	.app-icon { 
+		width: 90px; 
+		height: 90px; 
+		border-radius: 20px; 
+		margin-bottom: 15px; 
+		object-fit: cover; 
+	}
+	
+	.app-title { 
+		font-size: 1.2rem; 
+		margin: 0 0 8px 0; 
+		color: #fff; 
+	}
+	
+	.app-meta { 
+		font-size: 0.9rem; 
+		margin: 0; 
+		color: #8ea1c3; 
+		font-weight: 500;
+	}
 
-	.sticky-ad { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(26, 26, 46, 0.9); text-align: center; z-index: 999; padding: 5px 0; }
-	.ad-label { font-size: 10px; color: #666; margin: 0; }
+	/* IKLAN */
+	.ad-banner { 
+		text-align: center; 
+		margin-bottom: 30px; 
+		background: rgba(255,255,255,0.02);
+		padding: 10px;
+		border-radius: 10px;
+	}
+	.ad-label { 
+		font-size: 10px; 
+		color: #666; 
+		margin-bottom: 5px; 
+		letter-spacing: 2px;
+	}
 
-	/* CSS MEDIA QUERIES UNTUK HP */
-	@media (max-width: 768px) {
-		.content-wrapper { flex-direction: column; }
-		.sidebar { width: 100%; order: 2; }
-		.main-content { order: 1; }
-		.app-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+	/* RESPONSIVE UNTUK HP */
+	@media (max-width: 600px) {
+		.header { flex-direction: column; text-align: center; }
+		.search-bar { max-width: 100%; }
+		.app-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
 		.app-card { padding: 15px; }
-		.logo { font-size: 1.2rem; }
-		.nav-btn-special { font-size: 0.8rem; padding: 8px 12px; }
+		.app-icon { width: 70px; height: 70px; }
 	}
 </style>
 
 <script>
-	// Script Pencarian Real-time
+	// Script Pencarian Real-time tetap aktif!
 	document.getElementById('searchInput')?.addEventListener('input', (e) => {
 		const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
 		const cards = document.querySelectorAll('.app-card');
