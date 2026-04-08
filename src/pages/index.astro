@@ -5,7 +5,6 @@ import type { CollectionEntry } from 'astro:content';
 const daftarAplikasi = (await getCollection('aplikasi')).reverse();
 const semuaKategori = [...new Set(daftarAplikasi.map((app: CollectionEntry<'aplikasi'>) => app.data.kategori))];
 
-// LOGIKA PAGINASI (Menampilkan 10 aplikasi pertama)
 const appsPerPage = 10;
 const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 ---
@@ -27,8 +26,18 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .brand-logo { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; background-color: white; padding: 2px;}
         .brand-text { margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; }
         
-        /* TOMBOL MENU HP (Disembunyikan di PC) */
-        .mobile-menu-btn { display: none; background: transparent; border: none; color: white; font-size: 26px; cursor: pointer; padding: 0; }
+        /* 🔵 TOMBOL MENU HP (DI RANCANG AGAR SANGAT MENCOLOK) */
+        .mobile-menu-btn { 
+            display: none; /* Sembunyi di PC */
+            background: #2563eb; 
+            color: white; 
+            font-size: 20px; 
+            cursor: pointer; 
+            padding: 8px 16px; 
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            font-weight: bold;
+        }
         
         .nav-menu { display: flex; gap: 15px; align-items: center; }
         .nav-btn-special { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; }
@@ -50,25 +59,21 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .app-category { align-self: flex-start; font-size: 11px; color: #0284c7; background-color: #e0f2fe; font-weight: 700; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
         .app-title { font-size: 19px; color: #0f172a; font-weight: 700; margin: 0 0 8px 0; }
         
-        /* TOMBOL PAGINASI */
         .pagination-container { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
         .btn-page { padding: 10px 20px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; color: #475569; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-page:hover { background: #f1f5f9; border-color: #94a3b8; }
         .btn-page-active { background: #2563eb; color: white; border-color: #2563eb; }
-        .btn-page-active:hover { background: #1d4ed8; }
 
-        /* IKLAN SLOT NATIVE */
         .ad-banner { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: center; margin-bottom: 25px; }
         .ad-label { font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin: 0 0 10px 0; }
 
-        /* 📱 SUNTIKAN CSS KHUSUS HP (MOBILE RESPONSIVE) */
+        /* 📱 CSS MUTLAK UNTUK HP */
         @media (max-width: 768px) {
             .navbar { padding: 15px 20px; }
-            .mobile-menu-btn { display: block; } /* Munculkan tombol hamburger */
+            .mobile-menu-btn { display: block !important; } /* PAKSA MUNCUL */
             
-            /* Sembunyikan menu secara default, buat memanjang ke bawah saat aktif */
-            .nav-menu { display: none; width: 100%; flex-direction: column; margin-top: 15px; gap: 15px; }
-            .nav-menu.active { display: flex; } /* Class aktif yang di-trigger JS */
+            .nav-menu { display: none; width: 100%; flex-direction: column; margin-top: 20px; gap: 15px; }
+            .nav-menu.active { display: flex !important; }
             
             .nav-btn-special { width: 100%; box-sizing: border-box; }
             .search-bar { width: 100%; box-sizing: border-box; }
@@ -91,7 +96,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
             <h1 class="brand-text">Berbagi Aplikasi</h1>
         </a>
         
-        <button class="mobile-menu-btn" id="mobileBtn">☰</button>
+        <button class="mobile-menu-btn" id="mobileBtn">☰ MENU</button>
 
         <div class="nav-menu" id="navMenu">
             <a href="/request" class="nav-btn-special">📝 Request Software</a>
@@ -116,7 +121,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 
             <div style="margin-top: 30px;" class="ad-banner">
                 <p class="ad-label">ADVERTISING</p>
-                </div>
+            </div>
         </div>
 
         <div class="content">
@@ -127,7 +132,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 
             <div class="ad-banner">
                 <p class="ad-label">ADVERTISING</p>
-                </div>
+            </div>
             
             <div id="appList">
                 {displayedApps.map((app: any) => (
@@ -165,26 +170,24 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // SCRIPT TOMBOL MENU HP (HAMBURGER)
+            // SCRIPT TOMBOL MENU
             const mobileBtn = document.getElementById('mobileBtn');
             const navMenu = document.getElementById('navMenu');
             
             if (mobileBtn && navMenu) {
                 mobileBtn.addEventListener('click', () => {
                     navMenu.classList.toggle('active');
-                    // Ubah ikon saat ditekan
                     if (navMenu.classList.contains('active')) {
-                        mobileBtn.innerText = '✖'; // Tombol close (silang)
+                        mobileBtn.innerText = '✖ TUTUP'; 
                     } else {
-                        mobileBtn.innerText = '☰'; // Tombol menu garis tiga
+                        mobileBtn.innerText = '☰ MENU'; 
                     }
                 });
             }
 
-            // Script Pencarian Realtime
+            // PENCARIAN
             const searchInput = document.getElementById('searchInput') as HTMLInputElement;
             const appItems = document.querySelectorAll('.app-item') as NodeListOf<HTMLElement>;
-    
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     const target = e.target as HTMLInputElement;
@@ -196,16 +199,11 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
                 });
             }
 
-            // Script Deteksi Adblock
+            // ADBLOCK
             async function checkAdBlock() {
                 let isBlocked = false;
-                const testUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-                try {
-                    await fetch(new Request(testUrl), { mode: 'no-cors' }).catch(() => isBlocked = true);
-                } catch (e) {
-                    isBlocked = true;
-                }
-                
+                try { await fetch(new Request('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'), { mode: 'no-cors' }).catch(() => isBlocked = true); } 
+                catch (e) { isBlocked = true; }
                 if (isBlocked) {
                     const gate = document.getElementById('ab-gate');
                     if (gate) gate.style.display = 'block';
