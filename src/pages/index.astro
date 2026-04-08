@@ -26,23 +26,29 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .brand-logo { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; background-color: white; padding: 2px;}
         .brand-text { margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; }
         
-        /* 🔵 TOMBOL MENU HP (DI RANCANG AGAR SANGAT MENCOLOK) */
+        /* 📱 TOMBOL MENU HP (Sekarang Rapi & Elegan) */
         .mobile-menu-btn { 
-            display: none; /* Sembunyi di PC */
-            background: #2563eb; 
-            color: white; 
-            font-size: 20px; 
+            display: none; 
+            background: transparent; 
+            color: #ffffff; 
+            font-size: 28px; 
             cursor: pointer; 
-            padding: 8px 16px; 
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 5px; 
+            border: none;
+            line-height: 1;
+            transition: 0.3s;
         }
         
         .nav-menu { display: flex; gap: 15px; align-items: center; }
         .nav-btn-special { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; }
         .search-bar { padding: 12px 20px; width: 260px; border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; outline: none; background-color: rgba(255,255,255,0.05); color: white; }
         
+        /* Menu Ekstra di HP (Sistem Operasi & Kategori) */
+        .mobile-extra-menu { display: none; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 10px; }
+        .mobile-link { background: rgba(255,255,255,0.1); color: #e2e8f0; text-decoration: none; padding: 10px 15px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: center; flex: 1 1 auto; transition: 0.2s;}
+        .mobile-link:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        /* LAYOUT KONTEN */
         .main-layout { display: flex; max-width: 1100px; margin: 30px auto; padding: 0 20px; gap: 40px; }
         .sidebar { width: 220px; flex-shrink: 0; }
         .menu-title { font-size: 12px; color: #64748b; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; }
@@ -50,6 +56,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .menu-list a { text-decoration: none; color: #475569; display: block; padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 15px; transition: all 0.2s;}
         .menu-list a:hover { background-color: #eff6ff; color: #2563eb; transform: translateX(5px); }
         .content { flex-grow: 1; }
+        
         .hero-banner { background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border: 1px solid #bfdbfe; border-radius: 20px; padding: 35px 40px; margin-bottom: 35px; }
         .hero-title { margin: 0 0 10px 0; font-size: 26px; font-weight: 800; color: #1e3a8a; }
         .app-item { background-color: #ffffff; border-radius: 16px; padding: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); text-decoration: none; display: flex; align-items: flex-start; gap: 24px; transition: all 0.3s; margin-bottom: 20px;}
@@ -67,22 +74,23 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
         .ad-banner { background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: center; margin-bottom: 25px; }
         .ad-label { font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin: 0 0 10px 0; }
 
-        /* 📱 CSS MUTLAK UNTUK HP */
+        /* 📱 CSS KHUSUS HP YANG SUDAH DI-PERMAK */
         @media (max-width: 768px) {
             .navbar { padding: 15px 20px; }
-            .mobile-menu-btn { display: block !important; } /* PAKSA MUNCUL */
+            .mobile-menu-btn { display: block !important; }
             
-            .nav-menu { display: none; width: 100%; flex-direction: column; margin-top: 20px; gap: 15px; }
+            .nav-menu { display: none; width: 100%; flex-direction: column; margin-top: 15px; gap: 15px; }
             .nav-menu.active { display: flex !important; }
             
             .nav-btn-special { width: 100%; box-sizing: border-box; }
             .search-bar { width: 100%; box-sizing: border-box; }
             
+            /* Tampilkan menu ekstra di dalam Navbar, sembunyikan yang di Sidebar */
+            .mobile-extra-menu { display: block; }
+            .desktop-sidebar-menu { display: none; }
+            
             .main-layout { flex-direction: column; padding: 0 15px; gap: 20px; }
             .sidebar { width: 100%; }
-            .menu-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-            .menu-list li { flex: 1 1 calc(50% - 10px); }
-            .menu-list a { text-align: center; }
             .hero-banner { padding: 25px 20px; text-align: center; }
             .app-item { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
             .app-category { align-self: center; }
@@ -96,30 +104,48 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
             <h1 class="brand-text">Berbagi Aplikasi</h1>
         </a>
         
-        <button class="mobile-menu-btn" id="mobileBtn">☰ MENU</button>
+        <button class="mobile-menu-btn" id="mobileBtn">☰</button>
 
         <div class="nav-menu" id="navMenu">
             <a href="/request" class="nav-btn-special">📝 Request Software</a>
             <input type="text" id="searchInput" class="search-bar" placeholder="Cari software...">
+            
+            <div class="mobile-extra-menu">
+                <div style="font-size: 11px; color: #94a3b8; font-weight: 800; letter-spacing: 1px; margin-bottom: 12px;">SISTEM OPERASI</div>
+                <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                    <a href="/os/windows" class="mobile-link">Windows</a>
+                    <a href="/os/macos" class="mobile-link">macOS</a>
+                    <a href="/os/linux" class="mobile-link">Linux</a>
+                </div>
+                
+                <div style="font-size: 11px; color: #94a3b8; font-weight: 800; letter-spacing: 1px; margin-bottom: 12px;">KATEGORI UTAMA</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    {semuaKategori.map((kategori) => (
+                        <a href={'/kategori/' + (kategori as string).toLowerCase().replace(/\s+/g, '-')} class="mobile-link">{kategori}</a>
+                    ))}
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="main-layout">
         <div class="sidebar">
-            <div class="menu-title">Sistem Operasi</div>
-            <ul class="menu-list">
-                <li><a href="/os/windows">Windows</a></li>
-                <li><a href="/os/macos">macOS</a></li>
-                <li><a href="/os/linux">Linux</a></li>
-            </ul>
-            <div class="menu-title" style="margin-top: 25px;">Kategori Utama</div>
-            <ul class="menu-list">
-                {semuaKategori.map((kategori) => (
-                    <li><a href={'/kategori/' + (kategori as string).toLowerCase().replace(/\s+/g, '-')}>{kategori}</a></li>
-                ))}
-            </ul>
+            <div class="desktop-sidebar-menu">
+                <div class="menu-title">Sistem Operasi</div>
+                <ul class="menu-list">
+                    <li><a href="/os/windows">Windows</a></li>
+                    <li><a href="/os/macos">macOS</a></li>
+                    <li><a href="/os/linux">Linux</a></li>
+                </ul>
+                <div class="menu-title" style="margin-top: 25px;">Kategori Utama</div>
+                <ul class="menu-list">
+                    {semuaKategori.map((kategori) => (
+                        <li><a href={'/kategori/' + (kategori as string).toLowerCase().replace(/\s+/g, '-')}>{kategori}</a></li>
+                    ))}
+                </ul>
+            </div>
 
-            <div style="margin-top: 30px;" class="ad-banner">
+            <div style="margin-top: 20px;" class="ad-banner">
                 <p class="ad-label">ADVERTISING</p>
             </div>
         </div>
@@ -136,7 +162,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
             
             <div id="appList">
                 {displayedApps.map((app: any) => (
-                    <a href={'/' + app.id} class="app-item" data-title={app.data.title.toLowerCase()}>
+                    <a href={'/' + (app.slug || app.id)} class="app-item" data-title={app.data.title.toLowerCase()}>
                         <img src={app.data.gambar || 'https://placehold.co/100x100/ccc/white?text=Ikon'} alt={app.data.title} class="app-image">
                         <div class="app-text-block">
                             <div class="app-category">{app.data.kategori}</div>
@@ -170,7 +196,7 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // SCRIPT TOMBOL MENU
+            // SCRIPT TOMBOL MENU (Ubah Ikon Elegan)
             const mobileBtn = document.getElementById('mobileBtn');
             const navMenu = document.getElementById('navMenu');
             
@@ -178,9 +204,9 @@ const displayedApps = daftarAplikasi.slice(0, appsPerPage);
                 mobileBtn.addEventListener('click', () => {
                     navMenu.classList.toggle('active');
                     if (navMenu.classList.contains('active')) {
-                        mobileBtn.innerText = '✖ TUTUP'; 
+                        mobileBtn.innerText = '✖'; // Silang saat terbuka
                     } else {
-                        mobileBtn.innerText = '☰ MENU'; 
+                        mobileBtn.innerText = '☰'; // Garis tiga saat tertutup
                     }
                 });
             }
