@@ -10,6 +10,37 @@
 	</head>
 	<body>
 		<slot />
+	<div id="ab-blocker" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(26, 26, 46, 0.98); z-index:999999; color:white; text-align:center; padding-top:10vh; font-family:system-ui, sans-serif;">
+    <div style="max-width:500px; margin:0 auto; padding:30px; background:#16213e; border-radius:20px; border:2px solid #e94560; box-shadow:0 20px 50px rgba(0,0,0,0.8);">
+        <span style="font-size:5rem; display:block; margin-bottom:20px;">🛑</span>
+        <h2 style="color:#e94560; margin-bottom:15px; font-size:2rem;">Adblock Terdeteksi!</h2>
+        <p style="color:#8ea1c3; line-height:1.6; margin-bottom:25px; font-size:1.1rem;">Akses Terkunci. Mohon matikan Adblock Anda untuk melanjutkan unduhan. Iklan adalah cara kami menjaga layanan ini tetap gratis untuk Anda.</p>
+        <button onclick="location.reload()" style="background:#e94560; color:white; border:none; padding:15px 30px; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1.1rem; width:100%; transition:0.3s;">SAYA SUDAH MATIKAN ADBLOCK</button>
+    </div>
+</div>
+
+<script>
+    // Logika Deteksi Adblock
+    document.addEventListener("DOMContentLoaded", async function() {
+        let adBlockEnabled = false;
+        // Mencoba memuat file script iklan umum
+        const testAdUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        
+        try {
+            const response = await fetch(new Request(testAdUrl), { mode: 'no-cors' });
+            // Jika berhasil fetch, berarti adblock mati
+        } catch (e) {
+            // Jika fetch diblokir oleh browser/ekstensi, berarti adblock aktif
+            adBlockEnabled = true;
+        }
+        
+        if (adBlockEnabled) {
+            const blocker = document.getElementById('ab-blocker');
+            if (blocker) blocker.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Kunci layar agar tidak bisa di-scroll
+        }
+    });
+</script>
 	</body>
 </html>
 
