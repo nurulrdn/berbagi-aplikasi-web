@@ -22,13 +22,13 @@ collections:
       
       - { label: "Isi Artikel Lengkap", name: "body", widget: "markdown", hint: "Tulis semua penjelasan, fitur, spesifikasi, dan cara install di sini." }
 
-      # --- 📸 GALERI SCREENSHOT (KEMBALI HADIR) ---
+      # --- SCREENSHOTS ---
       - label: "Tangkapan Layar (Screenshots)"
         name: "screenshots"
         widget: "list"
         required: false
-        fields:
-          - { label: "Gambar Screenshot", name: "image", widget: "image" }
+        # Gunakan 'field' (Tunggal) agar outputnya aman dan disukai Netlify
+        field: { label: "Gambar", name: "image", widget: "image" }
 
       - label: "Daftar Link Download"
         name: "daftar_download"

@@ -10,11 +10,16 @@ const aplikasiCollection = defineCollection({
         gambar: z.string().optional(),
         ringkasan: z.string().optional(),
         
-        // 🚀 INI KUNCI UTAMANYA: Memaksa Astro menerima format gambar apapun!
-        screenshots: z.any().optional(),
-        daftar_download: z.any().optional()
+        // 🚀 Sekarang Astro tahu format gambarnya berupa kumpulan teks link yang aman
+        screenshots: z.array(z.string()).optional(),
         
-    }).catchall(z.any()) // Mode Santai Aktif
+        daftar_download: z.array(
+            z.object({
+                nama: z.string().optional(),
+                link: z.string().optional()
+            })
+        ).optional()
+    }).catchall(z.any())
 });
 
 export const collections = {
