@@ -12,25 +12,23 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      # --- INFO UTAMA ---
-      - { label: "Judul Aplikasi", name: "title", widget: "string", hint: "Gunakan kata kunci, misal: Download WinRAR Pro v7.01 Gratis" }
-      - { label: "Kategori", name: "kategori", widget: "string", hint: "Ketik kategori bebas, misal: Utility" }
+      - { label: "Judul Aplikasi", name: "title", widget: "string" }
+      - { label: "Kategori", name: "kategori", widget: "string", hint: "Misal: Utility" }
       - { label: "Sistem Operasi", name: "os", widget: "string", default: "Windows" }
-      - { label: "Ukuran File", name: "ukuran", widget: "string", hint: "Misal: 3.5 MB" }
+      - { label: "Ukuran File", name: "ukuran", widget: "string", hint: "Misal: 60 MB" }
       - { label: "Gambar Utama / Ikon", name: "gambar", widget: "image", required: false }
       
-      # --- 🚀 AMUNISI SEO GOOGLE ---
-      - { label: "Ringkasan (SEO Meta Description)", name: "ringkasan", widget: "text", hint: "Tulis 1-2 kalimat pendek yang mengandung kata kunci pencarian. Ini akan muncul di hasil pencarian Google." }
+      # --- AMUNISI SEO ---
+      - { label: "Ringkasan (SEO Meta Description)", name: "ringkasan", widget: "text", hint: "Maksimal 2 kalimat untuk muncul di pencarian Google." }
       
-      # --- 📝 DAGING ARTIKEL (KONTEN) ---
-      - { label: "Isi Artikel Lengkap", name: "body", widget: "markdown", hint: "Tulis penjelasan aplikasi, fitur, spesifikasi, dan cara instalasi di sini." }
+      # --- KOLOM DAGING ARTIKEL (YANG TADI HILANG) ---
+      - { label: "Isi Artikel Lengkap", name: "body", widget: "markdown", hint: "Tulis semua penjelasan, fitur, spesifikasi, dan cara install di sini." }
 
-      # --- 💰 LINK DOWNLOAD (Bisa Banyak) ---
+      # --- MESIN UANG (SAFELINK) ---
       - label: "Daftar Link Download"
         name: "daftar_download"
         widget: "list"
         required: false
-        hint: "Gunakan format Safelink kita. Misal Link URL: /download?url=https://t.me/..."
         fields:
-          - { label: "Nama Tombol (Misal: Download via Telegram)", name: "nama", widget: "string" }
-          - { label: "Link URL", name: "link", widget: "string" }
+          - { label: "Nama Tombol", name: "nama", widget: "string", hint: "Misal: Download Via Telegram" }
+          - { label: "Link URL", name: "link", widget: "string", hint: "Gunakan format Safelink: /download?url=https://..." }
