@@ -18,13 +18,18 @@ collections:
       - { label: "Ukuran File", name: "ukuran", widget: "string", hint: "Misal: 60 MB" }
       - { label: "Gambar Utama / Ikon", name: "gambar", widget: "image", required: false }
       
-      # --- AMUNISI SEO ---
       - { label: "Ringkasan (SEO Meta Description)", name: "ringkasan", widget: "text", hint: "Maksimal 2 kalimat untuk muncul di pencarian Google." }
       
-      # --- KOLOM DAGING ARTIKEL (YANG TADI HILANG) ---
       - { label: "Isi Artikel Lengkap", name: "body", widget: "markdown", hint: "Tulis semua penjelasan, fitur, spesifikasi, dan cara install di sini." }
 
-      # --- MESIN UANG (SAFELINK) ---
+      # --- 📸 GALERI SCREENSHOT (KEMBALI HADIR) ---
+      - label: "Tangkapan Layar (Screenshots)"
+        name: "screenshots"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Gambar Screenshot", name: "image", widget: "image" }
+
       - label: "Daftar Link Download"
         name: "daftar_download"
         widget: "list"

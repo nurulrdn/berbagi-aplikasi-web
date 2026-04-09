@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 
-// Fungsi untuk membuat halaman otomatis untuk setiap aplikasi di folder content
 export async function getStaticPaths() {
     const semuaAplikasi = await getCollection('aplikasi');
     return semuaAplikasi.map(app => ({
@@ -11,16 +10,15 @@ export async function getStaticPaths() {
 }
 
 const { app } = Astro.props;
-const { Content } = await render(app); // Mengambil isi artikel Markdown
+const { Content } = await render(app);
 ---
 
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Download {app.data.title} Terbaru Gratis - Berbagi Aplikasi</title>
-    <meta name="description" content={`Download ${app.data.title} untuk ${app.data.os} gratis. ${app.data.ringkasan}`}>
+    <meta name="description" content={`Download ${app.data.title} gratis. ${app.data.ringkasan}`}>
     <meta name="robots" content="index, follow">
     
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -30,55 +28,61 @@ const { Content } = await render(app); // Mengambil isi artikel Markdown
         "operatingSystem": app.data.os,
         "applicationCategory": app.data.kategori,
         "description": app.data.ringkasan,
-        "image": "https://berbagiaplikasi.netlify.app" + app.data.gambar,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "IDR"
-        }
+        "image": "https://berbagiaplikasi.netlify.app" + (app.data.gambar || ""),
+        "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "IDR" }
     })} />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Konsisten dengan Homepage (Pilar 1: Mata Nyaman) */
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; color: #334155; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; color: #334155; line-height: 1.6; }
         .navbar { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2); }
         .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .brand-logo { width: 32px; height: 32px; border-radius: 8px; background-color: white; padding: 2px;}
         .brand-text { margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; }
         .nav-btn-special { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; }
 
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .container { max-width: 850px; margin: 40px auto; padding: 0 20px; }
         
-        /* Box Informasi Header */
-        .app-header { background: #ffffff; padding: 30px; border-radius: 20px; display: flex; gap: 30px; align-items: center; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; margin-bottom: 30px; }
-        .app-icon-large { width: 120px; height: 120px; border-radius: 24px; object-fit: cover; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .app-title-main { font-size: 32px; color: #0f172a; margin: 0 0 10px 0; font-weight: 800; }
+        /* HEADER APLIKASI (Desain Mewah) */
+        .app-header { background: #ffffff; padding: 35px; border-radius: 20px; display: flex; gap: 30px; align-items: center; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; margin-bottom: 30px; position: relative; overflow: hidden; }
+        .app-header::before { content: ""; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: #2563eb; }
+        .app-icon-large { width: 130px; height: 130px; border-radius: 24px; object-fit: cover; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); }
+        .app-title-main { font-size: 32px; color: #0f172a; margin: 0 0 15px 0; font-weight: 800; line-height: 1.2; }
         .app-badges { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .badge { background: #e0f2fe; color: #0284c7; padding: 6px 15px; border-radius: 20px; font-weight: 700; font-size: 12px; text-transform: uppercase; }
-        .badge-os { background: #f1f5f9; color: #475569; }
-        .badge-size { background: #dcfce7; color: #166534; }
+        .badge { background: #e0f2fe; color: #0284c7; padding: 6px 15px; border-radius: 8px; font-weight: 700; font-size: 12px; text-transform: uppercase; border: 1px solid #bae6fd; }
+        .badge-os { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+        .badge-size { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 
-        /* Area Konten Markdown */
-        .content-area { background: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; line-height: 1.8; color: #475569; font-size: 16px; margin-bottom: 30px; }
-        .content-area h2 { color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 30px; }
-        .content-area img { max-width: 100%; border-radius: 12px; margin: 20px 0; }
+        /* KONTEN ARTIKEL (Biar Markdown Tampil Cantik) */
+        .content-area { background: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; font-size: 16px; color: #475569; margin-bottom: 30px; }
+        .content-area h2, .content-area h3 { color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 35px; margin-bottom: 15px; font-weight: 800; }
+        .content-area p { margin-bottom: 20px; }
+        .content-area ul { padding-left: 20px; margin-bottom: 25px; }
+        .content-area li { margin-bottom: 10px; position: relative; }
+        .content-area li::marker { color: #2563eb; font-weight: bold; }
+        .content-area strong { color: #1e293b; }
 
-        /* Tombol Download & Area Iklan */
-        .download-section { text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px dashed #e2e8f0; }
-        .download-btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 18px 40px; border-radius: 15px; text-decoration: none; font-weight: 800; font-size: 18px; transition: all 0.3s; box-shadow: 0 10px 20px rgba(37,99,235,0.3); margin: 10px; }
-        .download-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(37,99,235,0.4); }
-        
-        .ad-box { background: rgba(255,255,255,0.5); border: 1px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: center; margin: 25px 0; }
-        .ad-label { font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin: 0 0 10px 0; }
+        /* GALERI SCREENSHOT */
+        .gallery-section { margin-top: 40px; padding-top: 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .gallery-img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
+        .gallery-img:hover { transform: scale(1.03); box-shadow: 0 10px 15px -3px rgba(37,99,235,0.2); border-color: #bfdbfe; }
+
+        /* AREA DOWNLOAD */
+        .download-box { background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); padding: 40px 30px; border-radius: 20px; text-align: center; border: 2px dashed #bfdbfe; margin-top: 40px; }
+        .download-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 18px 40px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 18px; transition: all 0.3s; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); margin: 10px; width: 100%; max-width: 350px;}
+        .download-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.4); background: linear-gradient(135deg, #059669, #047857); }
+
+        /* IKLAN */
+        .ad-box { background: rgba(255,255,255,0.8); border: 1px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: center; margin: 25px 0; }
+        .ad-label { font-size: 10px; color: #94a3b8; letter-spacing: 1.5px; margin: 0 0 10px 0; font-weight: bold;}
 
         @media (max-width: 768px) {
-            .app-header { flex-direction: column; text-align: center; padding: 20px; }
+            .app-header { flex-direction: column; text-align: center; padding: 25px; }
             .app-badges { justify-content: center; }
-            .content-area { padding: 20px; }
-            .download-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+            .content-area { padding: 25px; }
         }
     </style>
 </head>
@@ -92,9 +96,12 @@ const { Content } = await render(app); // Mengambil isi artikel Markdown
     </div>
 
     <div class="container">
-        
+        <div style="margin-bottom: 20px;">
+            <a href="/" style="color: #64748b; text-decoration: none; font-weight: 600; font-size: 14px;">&larr; Kembali ke Beranda</a>
+        </div>
+
         <div class="app-header">
-            <img src={app.data.gambar || 'https://placehold.co/120x120/ccc/white'} alt={app.data.title} class="app-icon-large">
+            <img src={app.data.gambar || 'https://placehold.co/130x130/ccc/white'} alt={app.data.title} class="app-icon-large">
             <div>
                 <h1 class="app-title-main">{app.data.title}</h1>
                 <div class="app-badges">
@@ -108,19 +115,30 @@ const { Content } = await render(app); // Mengambil isi artikel Markdown
 
         <div class="ad-box">
             <p class="ad-label">ADVERTISING</p>
-            <div id="ad-native-detail-top">
-                </div>
+            <div id="ad-detail-top"></div>
         </div>
 
         <div class="content-area">
             <Content />
             
-            <div class="download-section">
-                <h3 style="color: #0f172a; margin-bottom: 20px; font-size: 22px;">Unduh {app.data.title} Gratis</h3>
+            {app.data.screenshots && app.data.screenshots.length > 0 && (
+                <div class="gallery-section">
+                    <h3>📸 Tangkapan Layar (Screenshots)</h3>
+                    <div class="gallery-grid">
+                        {app.data.screenshots.map((shot: any) => (
+                            <img src={shot.image} alt={`Screenshot ${app.data.title}`} class="gallery-img">
+                        ))}
+                    </div>
+                </div>
+            )}
+            
+            <div class="download-box">
+                <h3 style="color: #0f172a; margin-top: 0; margin-bottom: 20px; font-size: 22px;">Unduh Aplikasi Sekarang</h3>
+                <p style="color: #64748b; margin-bottom: 25px; font-size: 14px;">Pastikan Anda telah mematikan AdBlock untuk membuka tautan unduhan.</p>
                 
                 {app.data.daftar_download && app.data.daftar_download.map((dl: any) => (
                     <a href={dl.link} class="download-btn">
-                        📥 {dl.nama}
+                        <span style="font-size: 24px;">📥</span> {dl.nama}
                     </a>
                 ))}
             </div>
@@ -128,32 +146,8 @@ const { Content } = await render(app); // Mengambil isi artikel Markdown
 
         <div class="ad-box">
             <p class="ad-label">ADVERTISING</p>
-            <div id="ad-native-detail-bottom">
-                </div>
-        </div>
-
-    </div>
-
-    <div id="ab-gate" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.98); z-index:999999; color:white; text-align:center; padding-top:15vh;">
-        <div style="max-width:450px; margin:0 auto; padding:40px; background:#ffffff; border-radius:20px; box-shadow:0 25px 50px -12px rgba(0, 0, 0, 0.5);">
-            <div style="font-size:4rem; margin-bottom:20px;">🛑</div>
-            <h2 style="color:#0f172a; margin: 0 0 15px 0;">Adblock Terdeteksi!</h2>
-            <p style="color:#475569; line-height:1.6; margin-bottom: 25px;">Akses Terkunci. Mohon matikan ekstensi Adblock Anda untuk melanjutkan. Iklan membantu kami menjaga server tetap hidup.</p>
-            <button onclick="location.reload()" style="background:#2563eb; color:white; border:none; padding:15px 30px; border-radius:12px; font-weight:bold; cursor:pointer; width:100%; font-size: 15px;">SAYA SUDAH MATIKAN ADBLOCK</button>
+            <div id="ad-detail-bottom"></div>
         </div>
     </div>
-    <script>
-        async function checkAdBlock() {
-            let isBlocked = false;
-            try { await fetch(new Request('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'), { mode: 'no-cors' }).catch(() => isBlocked = true); } 
-            catch (e) { isBlocked = true; }
-            if (isBlocked) {
-                const gate = document.getElementById('ab-gate');
-                if (gate) gate.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        checkAdBlock();
-    </script>
 </body>
 </html>
