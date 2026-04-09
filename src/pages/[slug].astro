@@ -17,42 +17,37 @@ const { Content } = await render(app);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{app.data.title} - Berbagi Aplikasi</title>
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>{app.data.title || 'Aplikasi'} - Berbagi Aplikasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
-    <style is:global>
-        /* Menggunakan is:global agar CSS ini bisa menembus isi Markdown */
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; color: #334155; line-height: 1.6; }
-        .nav-custom { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .container-custom { max-width: 850px; margin: 40px auto; padding: 0 20px; }
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; margin: 0; color: #334155; }
+        .nav-custom { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 15px 40px; display: flex; align-items: center; }
+        .container-custom { max-width: 800px; margin: 40px auto; padding: 0 20px; }
         
         .header-card { background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; display: flex; gap: 25px; align-items: center; margin-bottom: 30px; }
         .header-icon { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; }
         
-        /* STYLING ARTIKEL (Ini yang bikin teks jadi rapi dan mewah) */
-        .markdown-body { background: white; padding: 40px; border-radius: 20px; border: 1px solid #e2e8f0; }
-        .markdown-body h2 { font-size: 24px; color: #0f172a; margin-top: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; font-weight: 800; }
-        .markdown-body h3 { font-size: 20px; color: #1e293b; margin-top: 25px; font-weight: 700; }
-        .markdown-body p { margin-bottom: 15px; font-size: 16px; color: #475569; }
-        .markdown-body ul { margin-bottom: 20px; padding-left: 20px; }
-        .markdown-body li { margin-bottom: 8px; color: #475569; }
-        .markdown-body strong { color: #0f172a; }
+        .markdown-body { background: white; padding: 40px; border-radius: 20px; border: 1px solid #e2e8f0; line-height: 1.8; }
+        
+        /* 🚀 JURUS :global() AGAR DESAIN TEMBUS KE MARKDOWN */
+        .markdown-body :global(h2) { font-size: 24px; color: #0f172a; margin-top: 35px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; font-weight: 800; }
+        .markdown-body :global(h3) { font-size: 20px; color: #1e293b; margin-top: 25px; font-weight: 700; }
+        .markdown-body :global(p) { margin-bottom: 15px; font-size: 16px; color: #475569; }
+        .markdown-body :global(ul) { margin-bottom: 20px; padding-left: 20px; color: #475569; }
+        .markdown-body :global(li) { margin-bottom: 10px; }
+        .markdown-body :global(strong) { color: #0f172a; font-weight: 700; }
 
-        /* GALERI SCREENSHOT */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .gallery-item { width: 100%; border-radius: 12px; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
-        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .gallery-item { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; border: 1px solid #e2e8f0; }
 
-        .download-btn-wrapper { margin-top: 30px; text-align: center; background: #f1f5f9; padding: 30px; border-radius: 15px; }
-        .btn-dl { background: #2563eb; color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 700; display: inline-block; width: 100%; max-width: 300px; }
+        .btn-dl { background: #2563eb; color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 700; display: inline-block; width: 100%; text-align: center; margin-bottom: 10px;}
     </style>
 </head>
 <body>
     <div class="nav-custom">
         <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
-            <img src="/logo.png" style="width: 30px;" onerror="this.src='https://placehold.co/30x30/white/blue?text=B'">
-            <span style="color: white; font-weight: 800; font-size: 20px;">Berbagi Aplikasi</span>
+            <h1 style="margin: 0; color: white; font-size: 20px;">Berbagi Aplikasi</h1>
         </a>
     </div>
 
@@ -70,9 +65,10 @@ const { Content } = await render(app);
 
             {app.data.screenshots && app.data.screenshots.length > 0 && (
                 <div style="margin-top: 40px; border-top: 2px dashed #f1f5f9; padding-top: 20px;">
-                    <h3 style="margin-bottom: 15px;">📸 Cuplikan Layar</h3>
+                    <h3 style="margin-bottom: 15px; font-weight: 800; color: #0f172a;">📸 Cuplikan Layar</h3>
                     <div class="gallery-grid">
                         {app.data.screenshots.map((s: any) => {
+                            // Deteksi otomatis apakah gambar berupa Teks atau Objek
                             const imgSrc = typeof s === 'string' ? s : (s.image || s.src);
                             return imgSrc ? <img src={imgSrc} class="gallery-item" /> : null;
                         })}
@@ -80,10 +76,10 @@ const { Content } = await render(app);
                 </div>
             )}
 
-            <div class="download-btn-wrapper">
-                <p style="margin-bottom: 15px; font-weight: 600;">Pilih Server Unduhan:</p>
+            <div style="margin-top: 40px; background: #f8fafc; padding: 30px; border-radius: 15px; text-align: center;">
+                <p style="margin-bottom: 15px; font-weight: 700; color: #0f172a;">Pilih Server Unduhan:</p>
                 {app.data.daftar_download && app.data.daftar_download.map((dl: any) => (
-                    <a href={dl.link} class="btn-dl" style="margin-bottom: 10px;">📥 {dl.nama}</a>
+                    <a href={dl.link} class="btn-dl">📥 {dl.nama}</a>
                 ))}
             </div>
         </div>
