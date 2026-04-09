@@ -10,15 +10,9 @@ const aplikasiCollection = defineCollection({
         gambar: z.string().optional(),
         ringkasan: z.string().optional(),
         
-        // 🚀 Sekarang Astro tahu format gambarnya berupa kumpulan teks link yang aman
-        screenshots: z.array(z.string()).optional(),
-        
-        daftar_download: z.array(
-            z.object({
-                nama: z.string().optional(),
-                link: z.string().optional()
-            })
-        ).optional()
+        // Dibuat sangat fleksibel agar menerima format apapun dari CMS
+        screenshots: z.any().optional(),
+        daftar_download: z.any().optional()
     }).catchall(z.any())
 });
 
