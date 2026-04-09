@@ -1,4 +1,3 @@
-
 backend:
   name: git-gateway
   branch: main
@@ -14,43 +13,24 @@ collections:
     slug: "{{slug}}"
     fields:
       # --- INFO UTAMA ---
-      - { label: "Judul Aplikasi", name: "title", widget: "string" }
-      - { label: "Kategori", name: "kategori", widget: "string", hint: "Ketik kategori bebas, misal: Digital Audio Workstation" }
-      - { label: "Sistem Operasi (OS Utama)", name: "os", widget: "string", default: "Windows" }
-      - { label: "Ukuran File", name: "ukuran", widget: "string", hint: "Misal: 3.2 GB" }
-      # --- LINK DOWNLOAD (Bisa Banyak Part) ---
+      - { label: "Judul Aplikasi", name: "title", widget: "string", hint: "Gunakan kata kunci, misal: Download WinRAR Pro v7.01 Gratis" }
+      - { label: "Kategori", name: "kategori", widget: "string", hint: "Ketik kategori bebas, misal: Utility" }
+      - { label: "Sistem Operasi", name: "os", widget: "string", default: "Windows" }
+      - { label: "Ukuran File", name: "ukuran", widget: "string", hint: "Misal: 3.5 MB" }
+      - { label: "Gambar Utama / Ikon", name: "gambar", widget: "image", required: false }
+      
+      # --- 🚀 AMUNISI SEO GOOGLE ---
+      - { label: "Ringkasan (SEO Meta Description)", name: "ringkasan", widget: "text", hint: "Tulis 1-2 kalimat pendek yang mengandung kata kunci pencarian. Ini akan muncul di hasil pencarian Google." }
+      
+      # --- 📝 DAGING ARTIKEL (KONTEN) ---
+      - { label: "Isi Artikel Lengkap", name: "body", widget: "markdown", hint: "Tulis penjelasan aplikasi, fitur, spesifikasi, dan cara instalasi di sini." }
+
+      # --- 💰 LINK DOWNLOAD (Bisa Banyak) ---
       - label: "Daftar Link Download"
         name: "daftar_download"
         widget: "list"
         required: false
-        hint: "Bisa tambah banyak link (misal: Part 1, Part 2, atau Single Link)"
+        hint: "Gunakan format Safelink kita. Misal Link URL: /download?url=https://t.me/..."
         fields:
-          - { label: "Nama Tombol (Misal: Download Google Drive - Part 1)", name: "nama", widget: "string" }
-          - { label: "Link URL Asli", name: "link", widget: "string" }
-      - { label: "Ringkasan Singkat (SEO)", name: "ringkasan", widget: "text", hint: "Muncul di Google dan di bawah judul web" }
-      - { label: "Ikon/Gambar Utama", name: "gambar", widget: "image", required: false }
-      
-      # --- FITUR & KELEBIHAN (Teks Biasa / Copy-Paste Langsung) ---
-      - { label: "Fungsi Aplikasi", name: "fungsi", widget: "text", hint: "Copy-paste semua fungsinya di sini. Pisahkan dengan Enter (Baris baru)." }
-      - { label: "Kelebihan", name: "kelebihan", widget: "text", hint: "Copy-paste semua kelebihannya di sini. Pisahkan dengan Enter (Baris baru)." }
-
-      # --- SCREENSHOTS ---
-      - label: "Tangkapan Layar (Screenshots)"
-        name: "screenshots"
-        widget: "list"
-        required: false
-        field: { label: "Gambar", name: "image", widget: "image" }
-
-      # --- SPESIFIKASI SISTEM (Grup) ---
-      - label: "Persyaratan Sistem Minimum"
-        name: "spesifikasi"
-        widget: "object"
-        fields:
-          - { label: "OS Minimum", name: "os", widget: "string", default: "Windows 10/11" }
-          - { label: "Prosesor", name: "prosesor", widget: "string" }
-          - { label: "RAM", name: "ram", widget: "string" }
-          - { label: "Penyimpanan (Storage)", name: "penyimpanan", widget: "string", required: false, hint: "Misal: 5 GB SSD" }
-          - { label: "Kartu Grafis (VGA/GPU)", name: "gpu", widget: "string", required: false, hint: "Misal: NVIDIA GTX 1060" }
-          
-      # --- DESKRIPSI PANJANG ---
-      - { label: "Deskripsi Lengkap", name: "body", widget: "markdown", hint: "Kamu bisa merapikan teks dengan bold, italic, dll di sini" }
+          - { label: "Nama Tombol (Misal: Download via Telegram)", name: "nama", widget: "string" }
+          - { label: "Link URL", name: "link", widget: "string" }
