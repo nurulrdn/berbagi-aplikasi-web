@@ -7,8 +7,7 @@ gambar: /uploads/win734544power-user.webp
 ringkasan: Download Power-user Premium 1.7.79.361 Full Version gratis. Plugin
   rahasia untuk PowerPoint, Excel, dan Word agar presentasi dan laporan Anda
   tampil profesional dalam hitungan menit.
-screenshots:
-  - image: /uploads/pa1.png
+screenshots: []
 daftar_download:
   - nama: DOWNLOAD
     link: /download?url=https://filecr.com/windows/power-user/
