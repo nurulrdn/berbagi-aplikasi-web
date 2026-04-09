@@ -8,7 +8,7 @@ ringkasan: Download Power-user Premium 1.7.79.361 Full Version gratis. Plugin
   rahasia untuk PowerPoint, Excel, dan Word agar presentasi dan laporan Anda
   tampil profesional dalam hitungan menit.
 screenshots:
-  - image: /uploads/power-user1.png
+  - image: /uploads/coolutils-total-pdf-converter-2020-v6.1.0.29-free-download-1024x578.jpg
 daftar_download:
   - nama: DOWNLOAD
     link: /download?url=https://filecr.com/windows/power-user/
