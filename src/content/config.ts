@@ -10,22 +10,11 @@ const aplikasiCollection = defineCollection({
         gambar: z.string().optional(),
         ringkasan: z.string().optional(),
         
-        // 📸 INI KUNCI JAWABANNYA: Memberitahu Astro bahwa ini adalah Gambar dari CMS
-        screenshots: z.array(
-            z.object({
-                image: z.string().optional()
-            })
-        ).optional(),
+        // 🚀 INI KUNCI UTAMANYA: Memaksa Astro menerima format gambar apapun!
+        screenshots: z.any().optional(),
+        daftar_download: z.any().optional()
         
-        // 💰 Format tombol Download
-        daftar_download: z.array(
-            z.object({
-                nama: z.string().optional(),
-                link: z.string().optional()
-            })
-        ).optional()
-        
-    }).catchall(z.any()) // 🛡️ Mode Kebal Ekstra
+    }).catchall(z.any()) // Mode Santai Aktif
 });
 
 export const collections = {
