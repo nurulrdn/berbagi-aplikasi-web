@@ -7,6 +7,8 @@ gambar: /uploads/total_pdf_converter-logo.avif
 ringkasan: Download Coolutils Total PDF Converter 6.5.0.156 Full Version gratis.
   Solusi terbaik untuk konversi file PDF ke Word, Excel, HTML, dan gambar secara
   massal dengan cepat dan aman.
+screenshots:
+  - image: /uploads/coolutils-total-pdf-converter-2020-v6.1.0.29-free-download-1024x578.jpg
 daftar_download:
   - nama: Download Total PDF Converter
     link: /download?url=https://filecr.com/windows/coolutils-total-pdf-converter/
